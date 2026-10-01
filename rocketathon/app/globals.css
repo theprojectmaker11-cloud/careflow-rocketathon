@@ -1,0 +1,314 @@
+@import "tailwindcss";
+
+/* ============================================================
+   CareFlow design tokens
+   Light, calm, clinical. Navy ink on soft off-white, one teal
+   accent, and four reserved semantic states. No gradients, no
+   glow. Everything below is the single source of truth.
+   ============================================================ */
+
+:root {
+  /* Surfaces */
+  --background: #f6f8fa;
+  --surface: #ffffff;
+  --surface-sunken: #f1f5f8;
+  --surface-raised: #ffffff;
+
+  /* Ink — deep navy, not black */
+  --ink: #0d1b2a;
+  --ink-muted: #55677a;
+  --ink-faint: #7e8fa1;
+  --ink-inverse: #ffffff;
+
+  /* Lines */
+  --line: #e2e8ef;
+  --line-strong: #cbd5e0;
+
+  /* Primary — calm healthcare teal */
+  --primary: #0a5f6e;
+  --primary-strong: #084c58;
+  --primary-ink: #ffffff;
+  --primary-soft: #e7f2f4;
+  --primary-line: #b6dae1;
+  --primary-text: #075261;
+
+  /* Semantic states — deliberately desaturated */
+  --ok: #15803d;
+  --ok-text: #11602f;
+  --ok-soft: #edf9f1;
+  --ok-line: #b6e3c6;
+
+  --warn: #a16207;
+  --warn-text: #8a5006;
+  --warn-soft: #fff8e8;
+  --warn-line: #f2dda3;
+
+  --alert: #b42318;
+  --alert-text: #9a1c13;
+  --alert-soft: #fef4f2;
+  --alert-line: #f2b8b2;
+
+  --info: #175cd3;
+  --info-text: #1249ab;
+  --info-soft: #eff5ff;
+  --info-line: #bcd8fd;
+
+  /* Shape + depth */
+  --radius-control: 9px;
+  --radius-card: 13px;
+  --radius-pill: 999px;
+  --shadow-card: 0 1px 2px rgb(13 27 42 / 0.04), 0 1px 3px rgb(13 27 42 / 0.03);
+  --shadow-raised: 0 4px 12px rgb(13 27 42 / 0.07), 0 1px 3px rgb(13 27 42 / 0.05);
+  --shadow-pop: 0 12px 32px rgb(13 27 42 / 0.12), 0 2px 8px rgb(13 27 42 / 0.06);
+  --ring: 0 0 0 3px rgb(10 95 110 / 0.22);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-sunken: var(--surface-sunken);
+  --color-raised: var(--surface-raised);
+
+  --color-ink: var(--ink);
+  --color-muted: var(--ink-muted);
+  --color-faint: var(--ink-faint);
+  --color-inverse: var(--ink-inverse);
+
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+
+  --color-primary: var(--primary);
+  --color-primary-strong: var(--primary-strong);
+  --color-primary-ink: var(--primary-ink);
+  --color-primary-soft: var(--primary-soft);
+  --color-primary-line: var(--primary-line);
+  --color-primary-text: var(--primary-text);
+
+  --color-ok: var(--ok);
+  --color-ok-text: var(--ok-text);
+  --color-ok-soft: var(--ok-soft);
+  --color-ok-line: var(--ok-line);
+
+  --color-warn: var(--warn);
+  --color-warn-text: var(--warn-text);
+  --color-warn-soft: var(--warn-soft);
+  --color-warn-line: var(--warn-line);
+
+  --color-alert: var(--alert);
+  --color-alert-text: var(--alert-text);
+  --color-alert-soft: var(--alert-soft);
+  --color-alert-line: var(--alert-line);
+
+  --color-info: var(--info);
+  --color-info-text: var(--info-text);
+  --color-info-soft: var(--info-soft);
+  --color-info-line: var(--info-line);
+
+  --radius-control: var(--radius-control);
+  --radius-card: var(--radius-card);
+  --radius-pill: var(--radius-pill);
+
+  --shadow-card: var(--shadow-card);
+  --shadow-raised: var(--shadow-raised);
+  --shadow-pop: var(--shadow-pop);
+
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+/* ---------------- Base ---------------- */
+
+* {
+  border-color: var(--line);
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--ink);
+  font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Clinical numbers must align in tables. */
+.font-tabular,
+table td,
+table th {
+  font-variant-numeric: tabular-nums;
+}
+
+::selection {
+  background: var(--primary-soft);
+  color: var(--primary-strong);
+}
+
+/* Visible focus for keyboard users only — never a mouse-click halo. */
+:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+button,
+a,
+input,
+select,
+textarea {
+  transition: background-color 140ms ease, border-color 140ms ease,
+    color 140ms ease, box-shadow 140ms ease, opacity 140ms ease;
+}
+
+/* ---------------- Scrollbars ---------------- */
+
+@supports (scrollbar-width: thin) {
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--line-strong) transparent;
+  }
+}
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--line-strong);
+  border-radius: var(--radius-pill);
+  border: 3px solid transparent;
+  background-clip: content-box;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--ink-faint);
+  background-clip: content-box;
+}
+
+/* ---------------- Motion ---------------- */
+
+@keyframes cf-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes cf-rise {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes cf-shimmer {
+  from {
+    background-position: 200% 0;
+  }
+  to {
+    background-position: -200% 0;
+  }
+}
+
+@keyframes cf-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-fade-in {
+  animation: cf-fade-in 200ms ease both;
+}
+
+.animate-rise {
+  animation: cf-rise 260ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* Skeletons sweep rather than pulse — reads as "working", not "broken". */
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--surface-sunken) 25%,
+    #e8eef4 37%,
+    var(--surface-sunken) 63%
+  );
+  background-size: 200% 100%;
+  animation: cf-shimmer 1.4s ease-in-out infinite;
+}
+
+.spin {
+  animation: cf-spin 700ms linear infinite;
+}
+
+/* Stagger helper for lists. */
+.stagger > * {
+  animation: cf-rise 300ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.stagger > *:nth-child(1) { animation-delay: 0ms; }
+.stagger > *:nth-child(2) { animation-delay: 40ms; }
+.stagger > *:nth-child(3) { animation-delay: 80ms; }
+.stagger > *:nth-child(4) { animation-delay: 120ms; }
+.stagger > *:nth-child(5) { animation-delay: 160ms; }
+.stagger > *:nth-child(6) { animation-delay: 200ms; }
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ---------------- Utilities ---------------- */
+
+.hairline {
+  border-width: 1px;
+  border-style: solid;
+  border-color: var(--line);
+}
+
+/* Keyboard users get a way past the nav. */
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  z-index: 100;
+}
+.skip-link:focus {
+  left: 12px;
+  top: 12px;
+  padding: 10px 16px;
+  background: var(--surface);
+  color: var(--primary-strong);
+  border-radius: var(--radius-control);
+  box-shadow: var(--shadow-pop);
+  font-weight: 600;
+}
+
+/* Clinicians print reports; keep them legible on paper. */
+@media print {
+  body {
+    background: #fff;
+  }
+  .no-print {
+    display: none !important;
+  }
+  .print-block {
+    break-inside: avoid;
+  }
+}

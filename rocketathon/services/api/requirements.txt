@@ -1,0 +1,19 @@
+# The `openai` package is the transport only: its client and the Agents SDK's
+# OpenAIChatCompletionsModel are pointed at OpenRouter's OpenAI-compatible endpoint
+# in aikti/llm.py. No OpenAI account or key is used.
+openai>=1.54
+openai-agents>=0.0.10
+fastapi>=0.115
+uvicorn[standard]>=0.32
+pydantic>=2.9
+pydantic-settings>=2.6
+# 2.28 is the floor: earlier versions reject the sb_secret_ / sb_publishable_ keys
+# with "Invalid API key". The legacy anon/service_role JWT keys still work.
+supabase>=2.28
+pymongo>=4.9
+python-dotenv>=1.0
+# The document reader shows the model rendered page images, because OpenRouter's
+# OpenAI-compatible endpoint only takes images in an image_url part. pypdfium2 is
+# a dependency-free PDFium binding (BSD-3); pillow is what it renders into.
+pypdfium2>=4.30
+pillow>=10.4
